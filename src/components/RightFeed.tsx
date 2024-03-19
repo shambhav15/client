@@ -1,5 +1,47 @@
-import React from "react";
+"use client";
+import React, { useCallback } from "react";
+
+import {
+  CredentialResponse,
+  GoogleLogin,
+  useGoogleLogin,
+} from "@react-oauth/google";
+import { PiGoogleChromeLogo } from "react-icons/pi";
+import toast from "react-hot-toast";
+import { graphqlClient } from "../../clients/api";
+import { verifyUserGoogleQuery } from "../../graphql/query/user";
 
 export default function RightFeed() {
-  return <div className="col-span-3 border-l border-l-gray-900 "></div>;
+  const handleGoogleLogin = useCallback(
+    async (cred: CredentialResponse) => {
+      const googleToken = cred.credential;
+      if (!googleToken) {
+        return toast.error("Failed to login with google");
+      }
+      const { verifyGoogleToken } = await graphqlClient.request(
+        verifyUserGoogleQuery,
+        {
+          token: googleToken,
+        }
+      );
+      toast.success("verified success");
+
+      if (verifyGoogleToken)
+        window.localStorage.setItem("__Twitter_token", googleToken);
+    },
+
+    []
+  );
+
+  return (
+    <div className="col-span-3 border-l border-l-gray-900 ml-4 p-1 ">
+      <div className="p-5 flex flex-col items-center border-gray-900 border hover:border-gray-800 hover:bg-[#080808] transition-all duration-300 h-fit">
+        <div className="flex items-center justify-center gap-2 text-lg mb-5">
+          <PiGoogleChromeLogo />
+          <div className="font-bold">Login with google</div>
+        </div>
+        <GoogleLogin onSuccess={handleGoogleLogin} />
+      </div>
+    </div>
+  );
 }
