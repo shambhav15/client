@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { BsTwitter } from "react-icons/bs";
 import { ReactNode } from "react";
@@ -10,6 +11,8 @@ import { FcBookmark } from "react-icons/fc";
 import { BsPeople } from "react-icons/bs";
 import { IoPersonOutline } from "react-icons/io5";
 import { CgMenuRound } from "react-icons/cg";
+import { useCurrentUser } from "../../hooks/user";
+import Image from "next/image";
 
 interface TwitterSideBarMenu {
   title: string;
@@ -56,6 +59,8 @@ export const sideBarItems: TwitterSideBarMenu[] = [
 ];
 
 export default function SideBar() {
+  const { user } = useCurrentUser();
+
   return (
     <div className="col-span-3 flex flex-col pt-8 border-r w-full border-r-gray-900">
       <div className="text-3xl hover:bg-gray-900 h-fit w-fit rounded-full p-2 cursor-pointer transition-all duration-100 ">
@@ -80,6 +85,21 @@ export default function SideBar() {
         <button className="p-2 bg-orange-600 font-bold tracking-normal text-lg text-[#0C0C0C] rounded-3xl w-3/4 mt-6 ">
           Tweet
         </button>
+        <div className="fixed bottom-10 rounded-xl p-2 bg-gray-950 flex gap-3">
+          {user && user.profileImageURL && (
+            <Image
+              src={user?.profileImageURL}
+              alt="user profile"
+              className="border rounded-full"
+              width={50}
+              height={50}
+            />
+          )}
+          <div className="text-xs">
+            <h1>{user?.firstName}</h1>
+            <h2>{user?.email}</h2>
+          </div>
+        </div>
       </div>
     </div>
   );
