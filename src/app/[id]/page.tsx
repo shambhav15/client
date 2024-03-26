@@ -99,7 +99,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </div>
       </div>
       <div>
-        {userInfo?.user?.tweets?.map((tweet) => {
+        {userInfo?.user?.tweets?.slice().reverse().map((tweet) => {
           return tweet ? <Card key={tweet?.id} data={tweet as Tweet} /> : null;
         })}
       </div>

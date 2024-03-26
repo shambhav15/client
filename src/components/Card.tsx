@@ -36,9 +36,9 @@ const Card: React.FC<CardProps> = (props) => {
           <Link href={`/${data?.author?.id}`}>{data.author?.firstName}</Link>
         </h1>
         <p>{data.content}</p>
-        {data.imageURL && (
+        {data?.imageURL && (
           <Image
-            src={data.imageURL}
+            src={data?.imageURL}
             width={400}
             height={400}
             alt="tweet image"
