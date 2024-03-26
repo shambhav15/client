@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Provider from "../../utils/providers";
+import SideBar from "@/components/SideBar";
+import RightFeed from "@/components/RightFeed";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -20,7 +22,13 @@ export default function RootLayout({
     <GoogleOAuthProvider clientId="369157823517-mhs55febvsafoe97v1n82aprts2f1a13.apps.googleusercontent.com">
       <html lang="en">
         <body className={inter.className}>
-          <Provider>{children}</Provider>
+          <Provider>
+            <div className="grid grid-cols-12  h-screen w-screen sm:px-56">
+              <SideBar />
+              {children}
+              <RightFeed />
+            </div>
+          </Provider>
           <Toaster position="bottom-right" />
         </body>
       </html>
