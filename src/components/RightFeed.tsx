@@ -1,11 +1,6 @@
 "use client";
-import React, { useCallback } from "react";
-
-import {
-  CredentialResponse,
-  GoogleLogin,
-  useGoogleLogin,
-} from "@react-oauth/google";
+import { useCallback } from "react";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { PiGoogleChromeLogo } from "react-icons/pi";
 import toast from "react-hot-toast";
 import { graphqlClient } from "../../clients/api";
